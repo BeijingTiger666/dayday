@@ -1,0 +1,88 @@
+
+#spring:
+#  profiles:
+#    active: dev
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: aa
+    #    url: jdbc:mysql://127.0.0.1:3306/study?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT&autoReconnect=true&useSSL=false
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  thymeleaf:
+#    prefix:
+#    suffix: .thm
+    cache: false
+
+  resources:
+    static-locations: classpath:/templates/
+
+  mvc:
+    static-path-pattern: classpath:/templates/
+#  mvc:
+#    #   “spring.mvc.static-path-pattern”用于阐述HTTP请求地址，请求非controller地址，如js,css,img等访问路径需要加上static,
+#    # 可以不配置也能访问图片
+#    #  而“spring.resources.static-locations”则用于描述静态资源的存放位置。多个路径（逗号隔开）中依次查找是否存在
+#    static-path-pattern: /static/**
+#    resources:
+#      static-locations: classpath:/static/,file:D:\\,classpath:/templates/
+
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/mappers/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.happy.day.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    #db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    # Sequence序列接口实现类配置
+    #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+    #逻辑删除配置（下面3个配置）
+    #logic-delete-value: 1
+    #logic-not-delete-value: 0
+    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    #自定义填充策略接口实现
+  #    meta-object-handler: com.happy.everyday.config.handler.MetaHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull
+    jdbc-type-for-null: 'null'
+
+#日志
+logging:
+  level:
+    root: debug
+    org.springframework.web: debug
+    com.happy.everyday.mapper: debug
+#日志文件输出路径
+#  file:
+#    /logs/assets.log
